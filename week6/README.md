@@ -23,10 +23,110 @@ This script reads the CSV file into a pandas DataFrame and writes it to a SQLite
 
 ![Data in SQlite](images/db.png)
 
-## 2. CRUD Operations and Explanation
+## 2. Basic Analysis Summary
 
+**Total number of universities**
+```sql
+SELECT COUNT(*) AS total_universities FROM university_rankings;
+```
+<span style="font-weight:bold; color:#2e86de;">Result: 200</span>
+
+**Average overall score**
+```sql
+SELECT AVG(scores_overall) AS avg_overall_score FROM university_rankings;
+```
+<span style="font-weight:bold; color:#2e86de;">Result: 60.43</span>
+
+**Number of closed universities**
+```sql
+SELECT COUNT(*) AS closed_universities FROM university_rankings WHERE closed = 1;
+```
+<span style="font-weight:bold; color:#2e86de;">Result: 0</span>
+
+
+**Number of universities per country (Top 10)**
+```sql
+SELECT location, COUNT(*) AS num_universities FROM university_rankings GROUP BY location ORDER BY num_universities DESC;
+```
+| Country | Number of Universities |
+|---------|-----------------------|
+| United States | 72 |
+| United Kingdom | 29 |
+| Germany | 14 |
+| Netherlands | 10 |
+| Canada | 9 |
+| Australia | 7 |
+| Switzerland | 6 |
+| Sweden | 6 |
+| China | 6 |
+| Japan | 5 |
+
+
+**Top 5 universities by overall score**
+```sql
+SELECT name, scores_overall FROM university_rankings ORDER BY scores_overall DESC LIMIT 5;
+```
+| University | Overall Score |
+|------------|---------------|
+| Harvard University | 96.1 |
+| California Institute of Technology | 96.0 |
+| Massachusetts Institute of Technology | 95.6 |
+| Stanford University | 94.3 |
+| Princeton University | 94.2 |
+
+## 3. CRUD Operations and Explanation
 The following SQL statements demonstrate basic CRUD operations:
 
+### Create
+Insert a new row with values for multiple columns (different data types):
+
+```sql
+INSERT INTO university_rankings (name, scores_overall, closed)
+VALUES ('Test University', 88.5, False);
+```
+
+![Create Output](images/create.png)
+
+### Read
+Count rows where the `scores_overall` falls between its mean and maximum:
+
+```sql
+WITH stats AS (
+  SELECT AVG(scores_overall) AS avg_score, MAX(scores_overall) AS max_score
+  FROM university_rankings
+)
+SELECT COUNT(*)
+FROM university_rankings, stats
+WHERE scores_overall > stats.avg_score
+  AND scores_overall < stats.max_score;
+```
+
+![Read Output](images/read.png)
+
+### Update
+Update `name` to 'Data Engineering' where the second letter is 'a':
+
+```sql
+UPDATE university_rankings
+SET name = 'Data Engineering'
+WHERE SUBSTR(name, 2, 1) = 'a';
+```
+
+![Update Output](images/update.png)
+
+### Delete
+Delete the row inserted in the Create step:
+
+```sql
+DELETE FROM university_rankings
+WHERE name = 'Test University';
+```
+
+![Delete Output](images/delete.png)
+
+
+## 3. CRUD Operations and Explanation
+The following SQL statements demonstrate basic CRUD operations:
 
 ### Create
 Insert a new row with values for multiple columns (different data types):
