@@ -1,4 +1,13 @@
+
 # SQLite Database Introduction
+
+## Index
+
+1. [Creating SQLite Database from CSV using Python](#1-creating-sqlite-database-from-csv-using-python)
+2. [Running SQL Scripts from the Terminal](#2-running-sql-scripts-from-the-terminal)
+3. [Basic Analysis Summary](#3-basic-analysis-summary)
+4. [CRUD Operations and Explanation](#4-crud-operations-and-explanation)
+5. [Findings](#5-findings)
 
 
 ## 1. Creating SQLite Database from CSV using Python
