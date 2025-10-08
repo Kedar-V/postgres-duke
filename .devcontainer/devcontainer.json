@@ -2,9 +2,9 @@
   "name": "IDS706 Postgres Dev",
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev",
-  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "workspaceFolder": "/workspaces",
   "forwardPorts": [5432],
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y postgresql-client && pip install -r requirements.txt",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y postgresql-client && pip install -r week5/requirements.txt",
   "containerEnv": {
     "PGHOST": "db",
     "PGUSER": "vscode",
