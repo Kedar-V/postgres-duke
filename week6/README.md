@@ -26,29 +26,62 @@ The dataset contains global university rankings from multiple sources, allowing 
 
 ## 1. Dataset Introduction
 
-This project uses the World University Rankings dataset, available on Kaggle:
 
-[World University Rankings Dataset](https://www.kaggle.com/datasets/mylesoneill/world-university-rankings?resource=download)
+This project uses the QS World University Rankings 2025 dataset, available on Kaggle:
+
+[QS World University Rankings 2025 Dataset](https://www.kaggle.com/datasets/melissamonfared/qs-world-university-rankings-2025)
+
+
 
 **Dataset Summary:**
 
-The dataset contains three major global university rankings:
-- **Times Higher Education World University Ranking** (UK, since 2010): Influential, but criticized for commercialization and bias against non-English institutions.
-- **Academic Ranking of World Universities (Shanghai Ranking)** (China, since 2003): Focuses on research power, criticized for undervaluing humanities and teaching quality.
-- **Center for World University Rankings** (Saudi Arabia, since 2012): A less well-known listing.
+The dataset contains over 1,500 rows and 28 columns.
 
-These rankings often disagree and have been subject to various criticisms regarding their fairness, methodology, and impact on universities worldwide. The dataset allows for comparison between ranking systems and analysis of how different universities perform globally.
+This dataset provides rankings and performance metrics for over 1,500 universities from 105 countries, including year-over-year data for 2024 and 2025. It covers institutional characteristics, regional classification, and a wide range of indicators such as academic reputation, research output, employability, sustainability, and internationalization.
+
+**Schema Overview:**
+
+| Column Name | Description | Data Type |
+|-------------|-------------|-----------|
+| RANK_2025 | University’s overall rank in the 2025 QS World University Rankings | Integer |
+| RANK_2024 | University’s overall rank in the 2024 QS Rankings | Integer |
+| Institution_Name | Name of the university or institution | Text |
+| Location | Country in which the institution is located | Text |
+| Region | Global region (e.g., Europe, Asia, North America) | Text |
+| SIZE | Size classification of the institution (e.g., S, M, L, XL) | Text |
+| FOCUS | Focus type (e.g., Comprehensive, Focused) | Text |
+| RES. | Research intensity (e.g., Very High, High) | Text |
+| STATUS | Status of the institution (e.g., Public, Private) | Text |
+| Academic_Reputation_Score | Score based on global academic reputation survey | Float |
+| Academic_Reputation_Rank | Rank based on academic reputation | Integer |
+| Employer_Reputation_Score | Score based on global employer reputation survey | Float |
+| Employer_Reputation_Rank | Rank based on employer reputation | Integer |
+| Faculty_Student_Score | Score reflecting student-to-faculty ratio | Float |
+| Faculty_Student_Rank | Rank based on faculty-student ratio | Integer |
+| Citations_per_Faculty_Score | Score reflecting research impact (citations per faculty) | Float |
+| Citations_per_Faculty_Rank | Rank based on citations per faculty | Integer |
+| International_Faculty_Score | Score representing international diversity of faculty | Float |
+| International_Faculty_Rank | Rank based on international faculty presence | Integer |
+| International_Students_Score | Score representing diversity of international students | Float |
+| International_Students_Rank | Rank based on international student ratio | Integer |
+| International_Research_Network_Score | Score based on global research collaboration | Float |
+| International_Research_Network_Rank | Rank based on international research partnerships | Integer |
+| Employment_Outcomes_Score | Score reflecting graduates’ employability and success | Float |
+| Employment_Outcomes_Rank | Rank based on employment outcomes | Integer |
+| Sustainability_Score | Score reflecting sustainability initiatives and performance | Float |
+| Sustainability_Rank | Rank based on sustainability measures | Integer |
+| Overall_Score | Final composite score used to determine the university's ranking | Float |
 
 ## 2. Creating SQLite Database from CSV using Python
 
-The database is created from the `2011_rankings.csv` file using the following Python script (`db_init.py`):
+The database is created from the `QSRanking.csv` file using the following Python script (`db_init.py`):
 
 ```python
 import pandas as pd
 import sqlite3
 from pathlib import Path
 
-csv_path = "2011_rankings.csv"
+csv_path = "QSRanking.csv"
 db_path = Path(csv_path).with_suffix(".db")
 
 df = pd.read_csv(csv_path)
@@ -57,7 +90,7 @@ df.to_sql("university_rankings", conn, if_exists="replace", index=False)
 conn.close()
 ```
 
-This script reads the CSV file into a pandas DataFrame and writes it to a SQLite database named `2011_rankings.db` with a table called `university_rankings`.
+This script reads the CSV file into a pandas DataFrame and writes it to a SQLite database named `QSRanking.db` with a table called `university_rankings`.
 
 ![Data in SQlite](images/db.png)
 
@@ -67,14 +100,15 @@ This script reads the CSV file into a pandas DataFrame and writes it to a SQLite
 To execute SQL queries from a `.sql` file against your SQLite database, use the following command in the terminal:
 
 ```bash
-sqlite3 2011_rankings.db < your_script.sql
+sqlite3 QSrankings.db < your_script.sql
 ```
 
 Replace `your_script.sql` with the name of your SQL file (e.g., `basic_ops.sql` or `CRUD.sql`).
 
-This will run all the queries in the file against the `2011_rankings.db` database and print the results to the terminal.
+This will run all the queries in the file against the `QSrankings.db` database and print the results to the terminal.
 
-You can also use this method to run basics_ops, CRUD, or university_ops scripts as needed.
+You can also use this method to run basic_ops, CRUD, or university_ops scripts as needed.
+
 
 ## 4. Basic Analysis Summary
 
@@ -82,50 +116,52 @@ You can also use this method to run basics_ops, CRUD, or university_ops scripts 
 ```sql
 SELECT COUNT(*) AS total_universities FROM university_rankings;
 ```
-<span style="font-weight:bold; color:#2e86de;">Result: 200</span>
+<span style="font-weight:bold; color:#2e86de;">Result: 1503</span>
 
 **Average overall score**
 ```sql
-SELECT AVG(scores_overall) AS avg_overall_score FROM university_rankings;
+SELECT AVG(Overall_Score) AS avg_overall_score FROM university_rankings;
 ```
-<span style="font-weight:bold; color:#2e86de;">Result: 60.43</span>
-
-**Number of closed universities**
-```sql
-SELECT COUNT(*) AS closed_universities FROM university_rankings WHERE closed = 1;
-```
-<span style="font-weight:bold; color:#2e86de;">Result: 0</span>
-
+<span style="font-weight:bold; color:#2e86de;">Result: 41.77</span>
 
 **Number of universities per country (Top 10)**
 ```sql
-SELECT location, COUNT(*) AS num_universities FROM university_rankings GROUP BY location ORDER BY num_universities DESC;
+SELECT Location, COUNT(*) AS num_universities FROM university_rankings GROUP BY Location ORDER BY num_universities DESC;
 ```
 | Country | Number of Universities |
 |---------|-----------------------|
-| United States | 72 |
-| United Kingdom | 29 |
-| Germany | 14 |
-| Netherlands | 10 |
-| Canada | 9 |
-| Australia | 7 |
-| Switzerland | 6 |
-| Sweden | 6 |
-| China | 6 |
-| Japan | 5 |
-
+| United States | 197 |
+| United Kingdom | 90 |
+| China (Mainland) | 71 |
+| Japan | 49 |
+| Germany | 48 |
+| Russia | 47 |
+| India | 46 |
+| South Korea | 43 |
+| Italy | 42 |
+| Australia | 38 |
 
 **Top 5 universities by overall score**
 ```sql
-SELECT name, scores_overall FROM university_rankings ORDER BY scores_overall DESC LIMIT 5;
+SELECT Institution_Name, Overall_Score FROM university_rankings ORDER BY Overall_Score DESC LIMIT 5;
 ```
 | University | Overall Score |
-|------------|---------------|
-| Harvard University | 96.1 |
-| California Institute of Technology | 96.0 |
-| Massachusetts Institute of Technology | 95.6 |
-| Stanford University | 94.3 |
-| Princeton University | 94.2 |
+|-----------------------------|---------------|
+| Imperial College London | 98.5 |
+| University of Oxford | 96.9 |
+| Harvard University | 96.8 |
+| University of Cambridge | 96.7 |
+| Stanford University | 96.1 |
+
+**Number of universities by status**
+```sql
+SELECT STATUS, COUNT(*) AS num_universities FROM university_rankings GROUP BY STATUS;
+```
+| Status | Number of Universities |
+|--------|-----------------------|
+| A | 1165 |
+| B | 249 |
+| C | 52 |
 
 ## 5. CRUD Operations and Explanation
 The following SQL statements demonstrate basic CRUD operations:
