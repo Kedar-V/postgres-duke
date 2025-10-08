@@ -217,11 +217,11 @@ WHERE name = 'Test University';
 
 ## 6. Findings
 
-- The dataset contains 200 universities from around the world.
-- The average overall score among all universities is 60.43.
-- The United States has the highest number of universities (72) in the dataset, followed by the United Kingdom (29).
-- No universities are marked as closed in this dataset.
-- The top 5 universities by overall score are Harvard University, California Institute of Technology, Massachusetts Institute of Technology, Stanford University, and Princeton University.
-- The number of universities where `scores_overall` falls between its mean and maximum is **73**.
+- The dataset contains 1,503 universities from 105 countries.
+- The average overall score among all universities is 41.77.
+- The United States has the highest number of universities (197), followed by the United Kingdom (90), China (Mainland) (71), and Japan (49).
+- The top 5 universities by overall score are Imperial College London, University of Oxford, Harvard University, University of Cambridge, and Stanford University.
+- Most universities have status 'A' (1,165), with 'B' (249) and 'C' (52) as other categories.
+- The number of universities where `Overall_Score` falls between its mean and maximum is **237**.
 
 
