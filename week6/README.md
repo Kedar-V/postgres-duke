@@ -23,7 +23,22 @@ This script reads the CSV file into a pandas DataFrame and writes it to a SQLite
 
 ![Data in SQlite](images/db.png)
 
-## 2. Basic Analysis Summary
+
+## 2. Running SQL Scripts from the Terminal
+
+To execute SQL queries from a `.sql` file against your SQLite database, use the following command in the terminal:
+
+```bash
+sqlite3 2011_rankings.db < your_script.sql
+```
+
+Replace `your_script.sql` with the name of your SQL file (e.g., `basic_ops.sql` or `CRUD.sql`).
+
+This will run all the queries in the file against the `2011_rankings.db` database and print the results to the terminal.
+
+You can also use this method to run basics_ops, CRUD, or university_ops scripts as needed.
+
+## 3. Basic Analysis Summary
 
 **Total number of universities**
 ```sql
@@ -74,7 +89,7 @@ SELECT name, scores_overall FROM university_rankings ORDER BY scores_overall DES
 | Stanford University | 94.3 |
 | Princeton University | 94.2 |
 
-## 3. CRUD Operations and Explanation
+## 4. CRUD Operations and Explanation
 The following SQL statements demonstrate basic CRUD operations:
 
 ### Create
@@ -122,5 +137,19 @@ DELETE FROM university_rankings
 WHERE name = 'Test University';
 ```
 
+
 ![Delete Output](images/delete.png)
+
+
+## 5. Findings
+
+Based on the analysis:
+
+- The dataset contains 200 universities from around the world.
+- The average overall score among all universities is 60.43.
+- The United States has the highest number of universities (72) in the dataset, followed by the United Kingdom (29).
+- No universities are marked as closed in this dataset.
+- The top 5 universities by overall score are Harvard University, California Institute of Technology, Massachusetts Institute of Technology, Stanford University, and Princeton University.
+- The number of universities where `scores_overall` falls between its mean and maximum is **73**.
+
 
