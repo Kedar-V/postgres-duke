@@ -1,16 +1,45 @@
 
+
+
 # SQLite Database Introduction
+
+## Project Summary
+
+This project is a demo of working with real-world university ranking data using SQLite. It covers:
+- Importing CSV data into a SQLite database using Python
+- Running SQL queries and scripts from the terminal
+- Performing basic analysis and CRUD operations on the data
+- Summarizing and interpreting results
+
+The dataset contains global university rankings from multiple sources, allowing for comparison and exploration of higher education trends worldwide.
+
 
 ## Index
 
-1. [Creating SQLite Database from CSV using Python](#1-creating-sqlite-database-from-csv-using-python)
-2. [Running SQL Scripts from the Terminal](#2-running-sql-scripts-from-the-terminal)
-3. [Basic Analysis Summary](#3-basic-analysis-summary)
-4. [CRUD Operations and Explanation](#4-crud-operations-and-explanation)
-5. [Findings](#5-findings)
+1. [Dataset Introduction](#1-dataset-introduction)
+2. [Creating SQLite Database from CSV using Python](#2-creating-sqlite-database-from-csv-using-python)
+3. [Running SQL Scripts from the Terminal](#3-running-sql-scripts-from-the-terminal)
+4. [Basic Analysis Summary](#4-basic-analysis-summary)
+5. [CRUD Operations and Explanation](#5-crud-operations-and-explanation)
+6. [Findings](#6-findings)
 
 
-## 1. Creating SQLite Database from CSV using Python
+## 1. Dataset Introduction
+
+This project uses the World University Rankings dataset, available on Kaggle:
+
+[World University Rankings Dataset](https://www.kaggle.com/datasets/mylesoneill/world-university-rankings?resource=download)
+
+**Dataset Summary:**
+
+The dataset contains three major global university rankings:
+- **Times Higher Education World University Ranking** (UK, since 2010): Influential, but criticized for commercialization and bias against non-English institutions.
+- **Academic Ranking of World Universities (Shanghai Ranking)** (China, since 2003): Focuses on research power, criticized for undervaluing humanities and teaching quality.
+- **Center for World University Rankings** (Saudi Arabia, since 2012): A less well-known listing.
+
+These rankings often disagree and have been subject to various criticisms regarding their fairness, methodology, and impact on universities worldwide. The dataset allows for comparison between ranking systems and analysis of how different universities perform globally.
+
+## 2. Creating SQLite Database from CSV using Python
 
 The database is created from the `2011_rankings.csv` file using the following Python script (`db_init.py`):
 
@@ -33,7 +62,7 @@ This script reads the CSV file into a pandas DataFrame and writes it to a SQLite
 ![Data in SQlite](images/db.png)
 
 
-## 2. Running SQL Scripts from the Terminal
+## 3. Running SQL Scripts from the Terminal
 
 To execute SQL queries from a `.sql` file against your SQLite database, use the following command in the terminal:
 
@@ -47,7 +76,7 @@ This will run all the queries in the file against the `2011_rankings.db` databas
 
 You can also use this method to run basics_ops, CRUD, or university_ops scripts as needed.
 
-## 3. Basic Analysis Summary
+## 4. Basic Analysis Summary
 
 **Total number of universities**
 ```sql
@@ -98,7 +127,7 @@ SELECT name, scores_overall FROM university_rankings ORDER BY scores_overall DES
 | Stanford University | 94.3 |
 | Princeton University | 94.2 |
 
-## 4. CRUD Operations and Explanation
+## 5. CRUD Operations and Explanation
 The following SQL statements demonstrate basic CRUD operations:
 
 ### Create
@@ -150,9 +179,7 @@ WHERE name = 'Test University';
 ![Delete Output](images/delete.png)
 
 
-## 5. Findings
-
-Based on the analysis:
+## 6. Findings
 
 - The dataset contains 200 universities from around the world.
 - The average overall score among all universities is 60.43.
