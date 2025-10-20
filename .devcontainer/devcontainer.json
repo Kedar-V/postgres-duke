@@ -1,6 +1,6 @@
 {
   "name": "IDS706 Postgres Dev",
-  "dockerComposeFile": "docker-compose.yml",
+  "dockerComposeFile": "../week7/docker-compose.yml",
   "service": "dev",
   "workspaceFolder": "/workspaces",
   "forwardPorts": [5432],
@@ -9,7 +9,7 @@
     "PGHOST": "db",
     "PGUSER": "vscode",
     "PGPASSWORD": "vscode",
-    "PGDATABASE": "duke_restaurants",
+    "PGDATABASE": "duke_sql",
     "PGPORT": "5432"
   }
 }

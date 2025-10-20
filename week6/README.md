@@ -94,6 +94,26 @@ This script reads the CSV file into a pandas DataFrame and writes it to a SQLite
 
 ![Data in SQlite](images/db.png)
 
+Postgres: creating the same table in PostgreSQL
+
+You can also load the CSV into a PostgreSQL database using `db_init_postgres.py`. Set the following environment variables first:
+
+- `PGHOST` (default: localhost)
+- `PGPORT` (default: 5432)
+- `PGUSER` (default: postgres)
+- `PGPASSWORD` (no default)
+- `PGDATABASE` (default: postgres)
+
+Then run:
+
+```bash
+# install requirements
+pip install -r requirements.txt
+
+# import into Postgres (drop table first)
+python db_init_postgres.py --drop
+```
+
 
 ## 3. Running SQL Scripts from the Terminal
 
