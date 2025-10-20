@@ -1,3 +1,5 @@
+[Open the notebook: `sql_guide.ipynb`](./sql_guide.ipynb)
+
 ## SQL Guidebook — Summary
 
 This folder contains a hands-on, personalized SQL reference guide designed to help you practice advanced SQL queries and document your work for interviews and future data tasks.
